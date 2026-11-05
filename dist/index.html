@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07110f" />
+    <meta name="description" content="Phenomena Lab turns any science topic into an interactive, explorable systems map powered by Pollinations." />
+    <title>Phenomena Lab — Explore how science works</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./config.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@pollinations/ui@0.1.0-alpha.20/dist/connect.js"></script>
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#lab">Skip to the lab</a>
+    <div class="noise" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Phenomena Lab home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>Phenomena <b>Lab</b></span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="#lab">Explorer</a>
+        <a href="#method">Method</a>
+      </nav>
+      <div class="connect-shell">
+        <span>Bring your own Pollen</span>
+        <polli-connect
+          id="polliConnect"
+          budget="2"
+          expiry="7"
+          models="openai/gpt-5.4-nano"
+          hide-buy-pollen
+          menu-links='[{"label":"Quest #19181","href":"https://github.com/pollinations/pollinations/issues/19181","icon":"app"}]'
+        ></polli-connect>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> AI-GENERATED SYSTEMS EXPLORER</p>
+          <h1>Don’t just read science. <em>Move through it.</em></h1>
+          <p class="lede">Name a phenomenon. Phenomena Lab builds a visual system you can scrub through, inspect node by node, and test yourself against.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#lab">Build an explainer <span>↓</span></a>
+            <button class="button secondary" id="loadDemoTop" type="button">Explore the coral demo</button>
+          </div>
+          <dl class="hero-stats">
+            <div><dt>One prompt</dt><dd>System map</dd></div>
+            <div><dt>Every scene</dt><dd>Interactive</dd></div>
+            <div><dt>Your wallet</dt><dd>Capped at 2</dd></div>
+          </dl>
+        </div>
+
+        <div class="hero-visual" aria-label="An animated scientific systems diagram">
+          <div class="visual-label">LIVE SYSTEM / 04 NODES</div>
+          <svg viewBox="0 0 560 540" role="img" aria-label="A network of connected scientific concepts">
+            <defs>
+              <radialGradient id="halo"><stop offset="0" stop-color="#d8ff7b" stop-opacity=".7"/><stop offset="1" stop-color="#d8ff7b" stop-opacity="0"/></radialGradient>
+            </defs>
+            <circle class="hero-halo" cx="280" cy="270" r="190" fill="url(#halo)" />
+            <g class="hero-lines"><path d="M280 270L132 150"/><path d="M280 270L434 158"/><path d="M280 270L150 392"/><path d="M280 270L428 396"/><path d="M132 150L434 158"/></g>
+            <g class="hero-node central" transform="translate(280 270)"><circle r="64"/><text y="-5">SYSTEM</text><text class="small" y="18">change over time</text></g>
+            <g class="hero-node n1" transform="translate(132 150)"><circle r="42"/><text>CAUSE</text></g>
+            <g class="hero-node n2" transform="translate(434 158)"><circle r="42"/><text>ENERGY</text></g>
+            <g class="hero-node n3" transform="translate(150 392)"><circle r="42"/><text>FEEDBACK</text></g>
+            <g class="hero-node n4" transform="translate(428 396)"><circle r="42"/><text>OUTCOME</text></g>
+          </svg>
+          <p>Drag the timeline. Click the parts. Watch the explanation reorganize itself.</p>
+        </div>
+      </section>
+
+      <section class="lab" id="lab" aria-labelledby="lab-title">
+        <div class="section-head">
+          <div><p class="eyebrow"><span></span> THE EXPLORER</p><h2 id="lab-title">Build a phenomenon</h2></div>
+          <p>Start broad or get specific. The model returns a structured explanation; your browser turns it into an explorable map.</p>
+        </div>
+
+        <div class="composer">
+          <label for="topicInput">Science topic</label>
+          <div class="prompt-row">
+            <input id="topicInput" maxlength="120" placeholder="e.g. How do black holes bend time?" autocomplete="off" />
+            <button class="button primary" id="generateButton" type="button">Generate explorer <span>↗</span></button>
+          </div>
+          <div class="composer-options">
+            <label>Audience
+              <select id="audienceSelect">
+                <option value="curious teenager">Curious teenager</option>
+                <option value="adult beginner">Adult beginner</option>
+                <option value="university student">University student</option>
+              </select>
+            </label>
+            <label>Lens
+              <select id="lensSelect">
+                <option value="cause and effect">Cause & effect</option>
+                <option value="scale and structure">Scale & structure</option>
+                <option value="energy and feedback">Energy & feedback</option>
+                <option value="timeline and change">Timeline & change</option>
+              </select>
+            </label>
+            <div class="suggestions" aria-label="Example topics">
+              <button type="button" data-topic="Why coral reefs bleach">Coral bleaching</button>
+              <button type="button" data-topic="How CRISPR edits DNA">CRISPR</button>
+              <button type="button" data-topic="How stars become supernovae">Supernovae</button>
+            </div>
+          </div>
+          <p class="wallet-note"><span>●</span> The topic is sent only after you connect your Pollinations wallet and press Generate.</p>
+        </div>
+
+        <div class="loading-card" id="loadingCard" hidden>
+          <div class="loader-orbit"><i></i><i></i><i></i></div>
+          <div><strong id="loadingTitle">Mapping the system…</strong><span id="loadingDetail">Finding the parts, links, and moments that matter.</span></div>
+        </div>
+
+        <div class="workspace" id="workspace" hidden>
+          <div class="workspace-head">
+            <div><p class="eyebrow"><span></span> GENERATED EXPLORER</p><h2 id="resultTitle">Coral bleaching</h2><p id="resultSubtitle"></p></div>
+            <button class="text-button" id="resetButton" type="button">New topic ↗</button>
+          </div>
+
+          <div class="story-strip">
+            <button id="playButton" class="play-button" type="button" aria-label="Play scenes">▶</button>
+            <div class="timeline-wrap">
+              <input id="sceneSlider" type="range" min="0" max="3" value="0" step="1" aria-label="Explanation scene" />
+              <div class="scene-labels" id="sceneLabels"></div>
+            </div>
+            <div class="scene-counter"><span id="sceneCurrent">01</span>/<span id="sceneTotal">04</span></div>
+          </div>
+
+          <div class="explorer-grid">
+            <article class="map-card">
+              <div class="card-kicker"><span>SYSTEM MAP</span><b id="nodeCount">6 PARTS</b></div>
+              <div class="map-stage" id="mapStage">
+                <svg id="systemMap" viewBox="0 0 720 560" role="img" aria-labelledby="mapTitle mapDesc">
+                  <title id="mapTitle">Interactive map of the scientific phenomenon</title>
+                  <desc id="mapDesc">Click a node to inspect its role in the system.</desc>
+                  <g id="edgeLayer"></g>
+                  <g id="nodeLayer"></g>
+                </svg>
+              </div>
+              <p class="map-help">Click any node to inspect it. The active scene highlights what changes.</p>
+            </article>
+
+            <aside class="detail-card" aria-live="polite">
+              <div class="detail-index" id="detailIndex">01</div>
+              <p class="eyebrow"><span></span> FOCUS NODE</p>
+              <h3 id="detailTitle">Heat stress</h3>
+              <p id="detailBody"></p>
+              <dl>
+                <div><dt>Role</dt><dd id="detailRole">Trigger</dd></div>
+                <div><dt>Watch for</dt><dd id="detailSignal">Temperature anomaly</dd></div>
+              </dl>
+              <div class="analogy"><span>MENTAL MODEL</span><p id="detailAnalogy"></p></div>
+            </aside>
+          </div>
+
+          <article class="scene-card">
+            <div><p class="eyebrow"><span></span> NOW EXPLORING</p><h3 id="sceneTitle">The baseline partnership</h3></div>
+            <p id="sceneBody"></p>
+            <div class="scene-takeaway"><span>KEY CHANGE</span><strong id="sceneTakeaway"></strong></div>
+          </article>
+
+          <section class="knowledge" aria-labelledby="knowledge-title">
+            <div class="section-head compact"><div><p class="eyebrow"><span></span> KNOWLEDGE CHECK</p><h2 id="knowledge-title">Can you predict the system?</h2></div></div>
+            <div id="quizMount" class="quiz-grid"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="method" id="method">
+        <div class="section-head"><div><p class="eyebrow"><span></span> WHY IT WORKS</p><h2>A model writes structure.<br />The browser makes it tangible.</h2></div></div>
+        <ol>
+          <li><span>01</span><div><h3>Decompose</h3><p>Pollinations turns the topic into a small set of meaningful parts and relationships.</p></div></li>
+          <li><span>02</span><div><h3>Sequence</h3><p>Scenes explain how the system changes instead of freezing it into one diagram.</p></div></li>
+          <li><span>03</span><div><h3>Explore</h3><p>Your browser renders the map, node details, timeline, and feedback instantly.</p></div></li>
+          <li><span>04</span><div><h3>Predict</h3><p>A short knowledge check tests cause-and-effect understanding, not memorization.</p></div></li>
+        </ol>
+        <p class="disclaimer">AI-generated science explanations can be incomplete or wrong. Use this as an intuition builder, then verify important claims with trusted scientific sources.</p>
+      </section>
+    </main>
+
+    <footer>
+      <div class="brand"><span class="brand-mark"><i></i><i></i><i></i></span><span>Phenomena <b>Lab</b></span></div>
+      <p>Built for Pollinations Quest #19181 · No prompts or generated explorers are stored.</p>
+      <a href="https://pollinations.ai/?ref=badge" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/pollinations/pollinations/main/packages/ui/src/brand/badge-made-with.svg" alt="Made with pollinations.ai" /></a>
+    </footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
+
